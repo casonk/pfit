@@ -11,9 +11,21 @@ class BasePersonalFinance:
     def calculate_savings_rate(self):
         return (self.savings / self.salary) * 100
 
+
 class SuperPersonalFinance(BasePersonalFinance):
     # def __init__(self, salary, bonus, cash, checking_account, savings_account, expected_raise, debt, debt_interest_rate):
-    def __init__(self, salary, bonus, cash, checking_account, savings_account, travel_spend, shelter_spend, food_spend, other_spend):
+    def __init__(
+        self,
+        salary,
+        bonus,
+        cash,
+        checking_account,
+        savings_account,
+        travel_spend,
+        shelter_spend,
+        food_spend,
+        other_spend,
+    ):
         self.salary = salary
         self.bonus = bonus
         self.cash = cash
@@ -39,7 +51,8 @@ class SuperPersonalFinance(BasePersonalFinance):
 
     # def calculate_debt_payment(self):
     #     return self.debt * self.debt_interest_rate
-    
+
+
 # Evolution of Economic Finance
 class BaseEconomicFinance:
     def __init__(self, interest_rate, inflation_rate, mortgage_rate):
@@ -53,10 +66,15 @@ class BaseEconomicFinance:
     def calculate_mortgage_payment(self, loan_amount, loan_term):
         monthly_interest_rate = self.mortgage_rate / 12
         num_payments = loan_term * 12
-        return (loan_amount * monthly_interest_rate) / (1 - (1 + monthly_interest_rate) ** -num_payments)
+        return (loan_amount * monthly_interest_rate) / (
+            1 - (1 + monthly_interest_rate) ** -num_payments
+        )
+
 
 class SuperEconomicFinance(BaseEconomicFinance):
-    def __init__(self, interest_rate, inflation_rate, mortgage_rate, bond_rate, market_rate):
+    def __init__(
+        self, interest_rate, inflation_rate, mortgage_rate, bond_rate, market_rate
+    ):
         super().__init__(interest_rate, inflation_rate, mortgage_rate)
         self.bond_rate = bond_rate
         self.market_rate = market_rate
