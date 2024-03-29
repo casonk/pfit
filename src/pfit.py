@@ -14,16 +14,17 @@ class FinancialObject:
 
     def __repr__(self):
         return f"FinancialObject({self.name}, {self.type}, {self.value}, {self.date_acquired}, {self.date_updated})"
-    
+
     def time_since_acquired(self):
         return datetime.datetime.now() - self.date_acquired
-    
+
     def time_since_updated(self):
         return datetime.datetime.now() - self.date_updated
 
     def update_value(self, new_value):
         self.value = new_value
         self.date_updated = datetime.datetime.now()
+
 
 class Employer:
     def __init__(self, employer_name, bonus_rate, raise_rate):
@@ -40,6 +41,7 @@ class Employer:
 
     def time_since_updated(self):
         return datetime.datetime.now() - self.date_updated
+
 
 class Job(FinancialObject):
     def __init__(self, job_title, salary, date_acquired, employer):
