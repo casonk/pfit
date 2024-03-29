@@ -1,87 +1,91 @@
-# Evolution of Personal Finance
-class BasePersonalFinance:
-    def __init__(self, income, savings, spending):
-        self.income = income
-        self.savings = savings
-        self.spending = spending
-
-    def calculate_net_income(self):
-        return self.salary - self.spending
-
-    def calculate_savings_rate(self):
-        return (self.savings / self.salary) * 100
+import datetime
 
 
-class SuperPersonalFinance(BasePersonalFinance):
-    # def __init__(self, salary, bonus, cash, checking_account, savings_account, expected_raise, debt, debt_interest_rate):
-    def __init__(
-        self,
-        salary,
-        bonus,
-        cash,
-        checking_account,
-        savings_account,
-        travel_spend,
-        shelter_spend,
-        food_spend,
-        other_spend,
-    ):
+class FinancialObject:
+    def __init__(self, _name, _type, _value, _date_acquired):
+        self.name = _name
+        self.type = _type
+        self.value = _value
+        self.date_acquired = _date_acquired
+        self.date_updated = datetime.datetime.now()
+
+    def __str__(self):
+        return f"Name: {self.name}, Type: {self.type}, Value: {self.value}, Date Acquired: {self.date_acquired}, Date Updated: {self.date_updated}"
+
+    def __repr__(self):
+        return f"FinancialObject({self.name}, {self.type}, {self.value}, {self.date_acquired}, {self.date_updated})"
+    
+    def time_since_acquired(self):
+        return datetime.datetime.now() - self.date_acquired
+    
+    def time_since_updated(self):
+        return datetime.datetime.now() - self.date_updated
+
+    def update_value(self, new_value):
+        self.value = new_value
+        self.date_updated = datetime.datetime.now()
+
+class Employer:
+    def __init__(self, employer_name, bonus_rate, raise_rate):
+        self.employer_name = employer_name
+        self.bonus_rate = bonus_rate
+        self.raise_rate = raise_rate
+        self.date_updated = datetime.datetime.now()
+
+    def __str__(self):
+        return f"Name: {self.employer_name}, Type: Employer, Bonus Rate: {self.bonus_rate}, Raise Rate: {self.raise_rate}"
+
+    def __repr__(self):
+        return f"Employer({self.employer_name}, {self.bonus_rate})"
+
+    def time_since_updated(self):
+        return datetime.datetime.now() - self.date_updated
+
+class Job(FinancialObject):
+    def __init__(self, job_title, salary, date_acquired, employer):
+        super().__init__(job_title, "Job", salary, date_acquired)
         self.salary = salary
-        self.bonus = bonus
-        self.cash = cash
-        self.checking_account = checking_account
-        self.savings_account = savings_account
-        self.travel_spend = travel_spend
-        self.shelter_spend = shelter_spend
-        self.food_spend = food_spend
-        self.other_spend = other_spend
-        # self.expected_raise = expected_raise
-        # self.debt = debt
-        # self.debt_interest_rate = debt_interest_rate
+        self.bonus = salary * employer.bonus_rate
+        self.employer = employer
 
-        income = salary + bonus
-        savings = cash + checking_account + savings_account
-        spending = travel_spend + shelter_spend + food_spend + other_spend
-        # spending = grocery_spend + rent + utilities + dining_out + shopping + travel + entertainment + other
-        super().__init__(income, savings, spending)
+    def __str__(self):
+        return f"{super().__str__()}, Salary: {self.salary}, Bonus: {self.bonus}"
 
-    # def calculate_net_income(self):
-    #     net_income = super().calculate_net_income()
-    #     return net_income + self.expected_raise
-
-    # def calculate_debt_payment(self):
-    #     return self.debt * self.debt_interest_rate
+    def __repr__(self):
+        return f"Job({super().__repr__()}, {self.salary})"
 
 
-# Evolution of Economic Finance
-class BaseEconomicFinance:
-    def __init__(self, interest_rate, inflation_rate, mortgage_rate):
+class Asset(FinancialObject):
+    def __init__(self, name, value, date_acquired, depreciation_rate):
+        super().__init__(name, "Asset", value, date_acquired)
+        self.depreciation_rate = depreciation_rate
+
+    def __str__(self):
+        return f"{super().__str__()}, Depreciation Rate: {self.depreciation_rate}"
+
+    def __repr__(self):
+        return f"Asset({super().__repr__()}, {self.depreciation_rate})"
+
+
+class Account(FinancialObject):
+    def __init__(self, name, value, date_acquired, interest_rate):
+        super().__init__(name, "Account", value, date_acquired)
         self.interest_rate = interest_rate
-        self.inflation_rate = inflation_rate
-        self.mortgage_rate = mortgage_rate
 
-    def calculate_real_interest_rate(self):
-        return self.interest_rate - self.inflation_rate
+    def __str__(self):
+        return f"{super().__str__()}, Interest Rate: {self.interest_rate}"
 
-    def calculate_mortgage_payment(self, loan_amount, loan_term):
-        monthly_interest_rate = self.mortgage_rate / 12
-        num_payments = loan_term * 12
-        return (loan_amount * monthly_interest_rate) / (
-            1 - (1 + monthly_interest_rate) ** -num_payments
-        )
+    def __repr__(self):
+        return f"Account({super().__repr__()}, {self.interest_rate})"
 
 
-class SuperEconomicFinance(BaseEconomicFinance):
-    def __init__(
-        self, interest_rate, inflation_rate, mortgage_rate, bond_rate, market_rate
-    ):
-        super().__init__(interest_rate, inflation_rate, mortgage_rate)
-        self.bond_rate = bond_rate
-        self.market_rate = market_rate
+class Expenditure(FinancialObject):
+    def __init__(self, name, value, date_acquired, category):
+        super().__init__(name, "Expenditure", value, date_acquired)
+        self.category = category
 
-    def calculate_real_interest_rate(self):
-        real_interest_rate = super().calculate_real_interest_rate()
-        return real_interest_rate + self.bond_rate
+    def __str__(self):
+        return f"{super().__str__()}, Category: {self.category}"
 
-    def calculate_market_value(self, investment):
-        return investment * self.market_rate
+    def __repr__(self):
+        return f"Expenditure({super().__repr__()}, {self.category})"
