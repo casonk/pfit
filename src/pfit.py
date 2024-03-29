@@ -58,8 +58,8 @@ class Job(FinancialObject):
 
 
 class Asset(FinancialObject):
-    def __init__(self, name, value, date_acquired, depreciation_rate):
-        super().__init__(name, "Asset", value, date_acquired)
+    def __init__(self, asset_name, asset_value, date_acquired, depreciation_rate):
+        super().__init__(asset_name, "Asset", asset_value, date_acquired)
         self.depreciation_rate = depreciation_rate
 
     def __str__(self):
@@ -70,8 +70,8 @@ class Asset(FinancialObject):
 
 
 class Account(FinancialObject):
-    def __init__(self, name, value, date_acquired, interest_rate):
-        super().__init__(name, "Account", value, date_acquired)
+    def __init__(self, account_name, value, date_acquired, interest_rate):
+        super().__init__(account_name, "Account", value, date_acquired)
         self.interest_rate = interest_rate
 
     def __str__(self):
