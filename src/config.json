@@ -1,0 +1,20 @@
+{
+    "expenses": {
+      "mortgage": 2000,
+      "meals": 350,
+      "internet": 100,
+      "electricity": 100,
+      "water": 75,
+      "gas": 75,
+      "cellular": 75,
+      "fuel": 125,
+      "clothing": 150
+    },
+    "savings": {
+      "roth": 625,
+      "crypto": 250,
+      "emergency": 325
+    },
+    "total": 4250
+  }
+  
